@@ -1,5 +1,7 @@
 # DevSpace File Tools
 
+**English** | [简体中文](README.zh-CN.md)
+
 Adds dedicated `copy`, `move`, and `delete` MCP tools to `@waishnav/devspace`.
 
 The goal is to keep filesystem mutations structured and workspace-scoped instead of falling back to shell `cp`, `mv`, or `rm` commands.
