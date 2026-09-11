@@ -52,7 +52,25 @@ Requirements:
 - Node.js supported by your DevSpace installation
 - an existing `@waishnav/devspace` installation
 
-Clone this repository and run:
+### One-line install
+
+Recommended:
+
+```bash
+npx --yes github:ZntxCYL/devspace-file-tools
+```
+
+No npm publication is required: `npx` installs this package directly from the GitHub repository and runs its single CLI entry.
+
+Alternatively, using the shell bootstrap:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ZntxCYL/devspace-file-tools/main/install.sh | bash
+```
+
+The bootstrap installer downloads `patch.mjs` from this repository, applies it, then removes the temporary copy.
+
+If you prefer to inspect the files first:
 
 ```bash
 git clone https://github.com/ZntxCYL/devspace-file-tools.git
@@ -67,7 +85,21 @@ The installer looks for DevSpace in these locations:
 3. `~/.local/share/devspace-kit/node_modules/@waishnav/devspace`;
 4. the global npm root.
 
-For a custom installation:
+For a custom installation with `npx`:
+
+```bash
+DEVSPACE_PACKAGE_ROOT=/path/to/node_modules/@waishnav/devspace \
+  npx --yes github:ZntxCYL/devspace-file-tools
+```
+
+Or with the shell bootstrap:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ZntxCYL/devspace-file-tools/main/install.sh | \
+  DEVSPACE_PACKAGE_ROOT=/path/to/node_modules/@waishnav/devspace bash
+```
+
+From a cloned repository:
 
 ```bash
 DEVSPACE_PACKAGE_ROOT=/path/to/node_modules/@waishnav/devspace bash install.sh
