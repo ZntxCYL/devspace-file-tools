@@ -1,8 +1,43 @@
 #!/bin/bash
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PATCH="$SCRIPT_DIR/patch.mjs"
+REPO="ZntxCYL/devspace-file-tools"
+REF="${DEVSPACE_FILE_TOOLS_REF:-main}"
+RAW_BASE="${DEVSPACE_FILE_TOOLS_RAW_BASE:-https://raw.githubusercontent.com/$REPO/$REF}"
+PATCH=""
+TEMP_PATCH=""
+
+cleanup() {
+  if [ -n "$TEMP_PATCH" ] && [ -f "$TEMP_PATCH" ]; then
+    rm -f "$TEMP_PATCH"
+  fi
+}
+trap cleanup EXIT
+
+SCRIPT_PATH="${BASH_SOURCE[0]:-}"
+if [ -n "$SCRIPT_PATH" ] && [ -f "$SCRIPT_PATH" ]; then
+  SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
+  if [ -f "$SCRIPT_DIR/patch.mjs" ]; then
+    PATCH="$SCRIPT_DIR/patch.mjs"
+  fi
+fi
+
+if [ -z "$PATCH" ]; then
+  TEMP_PATCH="$(mktemp "${TMPDIR:-/tmp}/devspace-file-tools.XXXXXX.mjs")"
+  PATCH_URL="$RAW_BASE/patch.mjs"
+  echo "[devspace-file-tools] downloading patch: $PATCH_URL"
+
+  if command -v curl >/dev/null 2>&1; then
+    curl -fsSL "$PATCH_URL" -o "$TEMP_PATCH"
+  elif command -v wget >/dev/null 2>&1; then
+    wget -qO "$TEMP_PATCH" "$PATCH_URL"
+  else
+    echo "[devspace-file-tools] curl or wget is required for one-line installation" >&2
+    exit 1
+  fi
+
+  PATCH="$TEMP_PATCH"
+fi
 
 if ! command -v node >/dev/null 2>&1; then
   echo "[devspace-file-tools] node not found in PATH" >&2
