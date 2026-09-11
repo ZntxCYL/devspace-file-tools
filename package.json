@@ -1,0 +1,11 @@
+{
+  "name": "devspace-file-tools",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Safe copy, move, and delete MCP tools for @waishnav/devspace.",
+  "type": "module",
+  "scripts": {
+    "check": "node --check patch.mjs && bash -n install.sh"
+  },
+  "license": "MIT"
+}
