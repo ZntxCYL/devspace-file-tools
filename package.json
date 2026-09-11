@@ -4,8 +4,11 @@
   "private": true,
   "description": "Safe copy, move, and delete MCP tools for @waishnav/devspace.",
   "type": "module",
+  "bin": {
+    "devspace-file-tools": "cli.mjs"
+  },
   "scripts": {
-    "check": "node --check patch.mjs && bash -n install.sh"
+    "check": "node --check cli.mjs && node --check patch.mjs && bash -n install.sh"
   },
   "license": "MIT"
 }
