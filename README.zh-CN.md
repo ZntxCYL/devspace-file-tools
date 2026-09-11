@@ -52,7 +52,25 @@ bash
 - Node.js 版本满足当前 DevSpace 的运行要求；
 - 本机已经安装 `@waishnav/devspace`。
 
-克隆仓库并执行：
+### 一条命令安装
+
+推荐使用：
+
+```bash
+npx --yes github:ZntxCYL/devspace-file-tools
+```
+
+不需要发布到 npm registry：`npx` 会直接从这个 GitHub 仓库安装，并执行仓库里唯一的 CLI 入口。
+
+也可以使用 shell bootstrap：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ZntxCYL/devspace-file-tools/main/install.sh | bash
+```
+
+这个 bootstrap 安装器会自动从本仓库下载 `patch.mjs`、应用补丁，并在完成后删除临时文件。
+
+如果你希望先检查代码再执行，也可以克隆仓库：
 
 ```bash
 git clone https://github.com/ZntxCYL/devspace-file-tools.git
@@ -67,7 +85,21 @@ bash install.sh
 3. `~/.local/share/devspace-kit/node_modules/@waishnav/devspace`；
 4. npm 全局安装目录。
 
-如果 DevSpace 安装在自定义位置：
+如果 DevSpace 安装在自定义位置，使用 `npx` 时可以这样指定：
+
+```bash
+DEVSPACE_PACKAGE_ROOT=/path/to/node_modules/@waishnav/devspace \
+  npx --yes github:ZntxCYL/devspace-file-tools
+```
+
+使用 shell bootstrap 时：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/ZntxCYL/devspace-file-tools/main/install.sh | \
+  DEVSPACE_PACKAGE_ROOT=/path/to/node_modules/@waishnav/devspace bash
+```
+
+如果已经克隆仓库，则仍可使用：
 
 ```bash
 DEVSPACE_PACKAGE_ROOT=/path/to/node_modules/@waishnav/devspace bash install.sh
